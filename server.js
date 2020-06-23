@@ -1,7 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 
-const bodyParser = require('body-parser');
+const bodyParser = require('body-parser-graphql');
 
 require('dotenv').config({ path: 'variables.env' });
 
@@ -16,9 +16,9 @@ const { typeDefs } = require('./schema');
 const { resolvers } = require('./resolvers');
 
 const schema = makeExecutableSchema({
-    typeDefs,
-    resolvers
-})
+  typeDefs,
+  resolvers,
+});
 
 // Connects to database
 mongoose
@@ -29,17 +29,23 @@ mongoose
 // Initializes app
 const app = express();
 
+
+
 // Create GraphiQl application
-app.use('./graphiql', graphiqlExpress({ endpointURL: '/graphql'}));
+app.use('/graphiql', graphiqlExpress({ endpointURL: '/graphql' }));
 
 // Connect schemas with GraphQl
-app.use('/graphql', graphqlExpress({
+app.use(
+  '/graphql',
+  bodyParser.graphql(),
+  graphqlExpress({
     schema,
     context: {
-        Recipe,
-        User
-    }
-}))
+      Recipe,
+      User,
+    },
+  })
+);
 
 const PORT = process.env.PORT || 4444;
 
