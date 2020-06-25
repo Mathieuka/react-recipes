@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 const mongoose = require('mongoose');
 
 const bodyParser = require('body-parser-graphql');
@@ -29,7 +30,12 @@ mongoose
 // Initializes app
 const app = express();
 
-
+const corsOptions = {
+  origin: 'http://localhost:3000',
+  credential: true,
+};
+// Authorizes cross domain request.
+app.use(cors(corsOptions));
 
 // Create GraphiQl application
 app.use('/graphiql', graphiqlExpress({ endpointURL: '/graphql' }));
