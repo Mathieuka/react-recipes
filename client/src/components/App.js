@@ -12,7 +12,7 @@ const App = () => {
   return (
     <div className="App">
       <h1>Home</h1>
-      <p>Recipes</p>;
+      <p>Recipes</p>
     </div>
   );
 };

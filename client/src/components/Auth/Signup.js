@@ -8,19 +8,9 @@ const Signup = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [passwordConfirmation, setPasswordConfirmation] = useState('');
-  const [token, setToken] = useState('');
   const [error, setError] = useState('');
 
   const [signupMutation, { data }] = useMutation(SIGNUP_USER);
-
-  useEffect(() => {
-    if (token) {
-      setUsername(() => '');
-      setEmail(() => '');
-      setPassword(() => '');
-      setPasswordConfirmation(() => '');
-    }
-  }, [token]);
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -31,28 +21,27 @@ const Signup = () => {
       password.localeCompare(passwordConfirmation) === 0
     ) {
       try {
-        await signupMutation({
+        const response = await signupMutation({
           variables: {
             username: username,
             email: email,
             password: password,
           },
         });
-        if (data && data.signupUser) {
-          setToken(() => data.signupUser.token);
-        }
+        const token = response.data.signupUser.token;
+        localStorage.setItem('token', token);
+        setUsername(() => '');
+        setEmail(() => '');
+        setPassword(() => '');
+        setPasswordConfirmation(() => '');
       } catch (error) {
-        console.log('Error:: ', error);
         setError(() => error);
       }
     } else {
-      alert('Missing field in the form or Password is not identical to ConfirmPassword');
+      alert(
+        'Missing field in the form or Password is not identical to ConfirmPassword'
+      );
     }
-
-    setUsername(() => '');
-    setEmail(() => '');
-    setPassword(() => '');
-    setPasswordConfirmation(() => '');
   };
 
   return (
@@ -92,6 +81,7 @@ const Signup = () => {
         </button>
       </form>
       {error && <Error error={error.message} />}
+
     </div>
   );
 };
