@@ -34,8 +34,17 @@ const corsOptions = {
   origin: 'http://localhost:3000',
   credential: true,
 };
+
 // Authorizes cross domain request.
 app.use(cors(corsOptions));
+
+// Set up JWT authentication middleware
+app.use(async (req, resp, next) => {
+  const token = req.headers['authorization'];
+  console.log('token => ', token);
+  
+  next();
+});
 
 // Create GraphiQl application
 app.use('/graphiql', graphiqlExpress({ endpointURL: '/graphql' }));
