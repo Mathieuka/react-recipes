@@ -10,6 +10,7 @@ import {
 import App from './components/App';
 import Signin from './components/Auth/Signin';
 import Signup from './components/Auth/Signup';
+import withSession  from './components/withSession';
 
 import './index.css';
 
@@ -45,10 +46,12 @@ const Root = () => (
   </Router>
 );
 
+const RooWithSession = withSession(Root);
+
 ReactDOM.render(
   <React.StrictMode>
     <ApolloProvider client={client}>
-      <Root />
+      <RooWithSession />
     </ApolloProvider>
   </React.StrictMode>,
   document.getElementById('root')

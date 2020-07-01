@@ -12,3 +12,14 @@ export const GET_ALL_RECIPES = gql`
     }
   }
 `;
+
+
+export const GET_CURRENT_USER = gql`
+  query {
+    getCurrentUser {
+      username
+      joinDate
+      email
+    }
+  }
+`;

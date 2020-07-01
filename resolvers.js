@@ -12,6 +12,17 @@ exports.resolvers = {
       const allRecipes = await Recipe.find();
       return allRecipes;
     },
+    getCurrentUser: async (root, args, { currentUser, User }) => {
+      if (!currentUser) {
+        return null;
+      }
+
+      const user = await User.findOne({
+        username: currentUser.username,
+      }).populate({ path: 'favorites', model: 'Recipe' });
+
+      return user;
+    },
   },
   Mutation: {
     addRecipe: async (
@@ -31,7 +42,7 @@ exports.resolvers = {
     },
     signupUser: async (root, { username, email, password }, { User }) => {
       const user = await User.findOne({ username });
-      
+
       if (user) {
         throw new Error('User already exist');
       }
@@ -42,7 +53,7 @@ exports.resolvers = {
     },
     signinUser: async (root, { username, password }, { User }) => {
       const user = await User.findOne({ username });
-       
+
       if (!user) {
         throw new Error('User not found');
       }

@@ -12,7 +12,7 @@ const Signin = () => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    if (username && password.length > 0) {
+    if (username && password) {
       try {
         const response = await signinMutation({
           variables: {
@@ -25,12 +25,11 @@ const Signin = () => {
         setUsername(() => '');
         setPassword(() => '');
       } catch (error) {
-        console.log('Error:: ', error);
         setError(() => error);
       }
     } else {
       alert(
-        'Missing field in the form or Password is not identical to ConfirmPassword'
+        'Missing field '
       );
     }
   };

@@ -17,7 +17,7 @@ const Signup = () => {
     if (
       username &&
       email &&
-      password.length > 0 &&
+      password &&
       password.localeCompare(passwordConfirmation) === 0
     ) {
       try {
