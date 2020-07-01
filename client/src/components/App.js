@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import './App.css';
 import { useQuery } from 'react-apollo';
 import { GET_ALL_RECIPES } from '../queries';
