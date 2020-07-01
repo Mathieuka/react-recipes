@@ -8,7 +8,7 @@ const App = () => {
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error</div>;
-
+  console.log('[App.js] data => ', data);
   return (
     <div className="App">
       <h1>Home</h1>

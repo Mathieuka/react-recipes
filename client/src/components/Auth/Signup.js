@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import { withRouter } from 'react-router-dom';
 import { useMutation } from 'react-apollo';
 import { SIGNUP_USER } from '../../mutations/index';
 import Error from '../Error/Error';
 
-const Signup = () => {
+const Signup = ({ history, refetch }) => {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -11,6 +12,13 @@ const Signup = () => {
   const [error, setError] = useState('');
 
   const [signupMutation, { data }] = useMutation(SIGNUP_USER);
+
+  function clearState() {
+    setUsername(() => '');
+    setEmail(() => '');
+    setPassword(() => '');
+    setPasswordConfirmation(() => '');
+  }
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -21,19 +29,17 @@ const Signup = () => {
       password.localeCompare(passwordConfirmation) === 0
     ) {
       try {
-        const response = await signupMutation({
+        const { data } = await signupMutation({
           variables: {
             username: username,
             email: email,
             password: password,
           },
         });
-        const token = response.data.signupUser.token;
-        localStorage.setItem('token', token);
-        setUsername(() => '');
-        setEmail(() => '');
-        setPassword(() => '');
-        setPasswordConfirmation(() => '');
+        localStorage.setItem('token', data.signupUser.token);
+        await refetch();
+        clearState();
+        history.push('/');
       } catch (error) {
         setError(() => error);
       }
@@ -81,9 +87,8 @@ const Signup = () => {
         </button>
       </form>
       {error && <Error error={error.message} />}
-
     </div>
   );
 };
 
-export default Signup;
+export default withRouter(Signup);

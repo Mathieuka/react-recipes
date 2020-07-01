@@ -1,36 +1,41 @@
 import React, { useState, useEffect } from 'react';
 import { useMutation } from 'react-apollo';
 import { SIGNIN_USER } from '../../mutations/index';
+import { withRouter } from 'react-router-dom';
 import Error from '../Error/Error';
 
-const Signin = () => {
+const Signin = ({ history, refetch }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
   const [signinMutation, { data }] = useMutation(SIGNIN_USER);
 
+  function clearState() {
+    setUsername(() => '');
+    setPassword(() => '');
+  }
+
   const onSubmit = async (e) => {
     e.preventDefault();
     if (username && password) {
       try {
-        const response = await signinMutation({
+        const { data } = await signinMutation({
           variables: {
             username: username,
             password: password,
           },
         });
-        const token = response.data.signinUser.token;
-        localStorage.setItem('token', token);
-        setUsername(() => '');
-        setPassword(() => '');
+        console.log(data);
+        localStorage.setItem('token', data.signinUser.token);
+        await refetch();
+        clearState();
+        history.push('/');
       } catch (error) {
         setError(() => error);
       }
     } else {
-      alert(
-        'Missing field '
-      );
+      alert('Missing field ');
     }
   };
 
@@ -61,4 +66,4 @@ const Signin = () => {
   );
 };
 
-export default Signin;
+export default withRouter(Signin);

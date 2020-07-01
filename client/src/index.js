@@ -10,7 +10,7 @@ import {
 import App from './components/App';
 import Signin from './components/Auth/Signin';
 import Signup from './components/Auth/Signup';
-import withSession  from './components/withSession';
+import withSession from './components/withSession';
 
 import './index.css';
 
@@ -28,19 +28,19 @@ const client = new ApolloClient({
       },
     });
   },
-  onError: ({networkError}) =>{
+  onError: ({ networkError }) => {
     if (networkError) {
       console.log('Network Error :: ', networkError);
     }
-  }
+  },
 });
 
-const Root = () => (
+const Root = ({ refetch, currentUser }) => (
   <Router>
     <Switch>
       <Route path="/" exact component={App} />
-      <Route path="/signin" component={Signin} />
-      <Route path="/signup" component={Signup} />
+      <Route path="/signin" render={() => <Signin refetch={refetch} />} />
+      <Route path="/signup" render={() => <Signup refetch={refetch} />} />
       <Redirect to="/" />
     </Switch>
   </Router>
