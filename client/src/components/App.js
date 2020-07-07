@@ -1,4 +1,5 @@
 import React, { useMemo } from 'react';
+import RecipeItem from './Recipe/RecipeItem';
 import './App.css';
 import { useQuery } from 'react-apollo';
 import { GET_ALL_RECIPES } from '../queries';
@@ -12,7 +13,11 @@ const App = () => {
   return (
     <div className="App">
       <h1>Home</h1>
-      <p>Recipes</p>
+      <ul>
+        {data.getAllRecipes.map((recipe) => (
+          <RecipeItem key={recipe._id} {...recipe} />
+        ))}
+      </ul>
     </div>
   );
 };

@@ -26,7 +26,6 @@ const Signin = ({ history, refetch }) => {
             password: password,
           },
         });
-        console.log(data);
         localStorage.setItem('token', data.signinUser.token);
         await refetch();
         clearState();

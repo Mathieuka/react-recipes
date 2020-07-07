@@ -42,7 +42,7 @@ const client = new ApolloClient({
 const Root = ({ refetch, session }) => (
   <Router>
     <Fragment>
-      <Navbar session={session}/>
+      <Navbar session={session} />
       <Switch>
         <Route path="/" exact component={App} />
         <Route path="/search"  component={Search} />
