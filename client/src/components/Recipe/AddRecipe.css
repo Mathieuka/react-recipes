@@ -1,0 +1,7 @@
+select {
+  width: 142px;
+}
+
+textarea::placeholder {
+  font-size: 12px;
+}

@@ -16,7 +16,7 @@ const Signin = ({ history, refetch }) => {
     setPassword(() => '');
   }
 
-  const onSubmit = async (e) => {
+  const handleSignin = async (e) => {
     e.preventDefault();
     if (username && password) {
       try {
@@ -41,7 +41,7 @@ const Signin = ({ history, refetch }) => {
   return (
     <div className="App">
       <h2 className="App">Signin</h2>
-      <form className="form" onSubmit={(e) => onSubmit(e)}>
+      <form className="form" onSubmit={(e) => handleSignin(e)}>
         <input
           type="text"
           name="username"

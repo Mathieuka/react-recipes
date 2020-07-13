@@ -4,7 +4,7 @@ exports.typeDefs = `
         name: String!
         category: String!
         description: String!
-        instruction: String!
+        instructions: String!
         createdDate: String
         likes: Int
         username: String
@@ -23,6 +23,8 @@ exports.typeDefs = `
         getAllRecipes: [Recipe]
 
         getCurrentUser: User
+
+        getRecipe(_id: ID!): Recipe
     }
 
     type Token {

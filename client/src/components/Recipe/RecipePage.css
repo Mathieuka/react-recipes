@@ -1,0 +1,13 @@
+.recipe__title {
+  text-align: center;
+}
+
+.recipe_content {
+  margin: 10rem;
+  overflow-wrap: anywhere;
+  min-width: 10rem;
+}
+
+.like {
+  text-align: center;
+}

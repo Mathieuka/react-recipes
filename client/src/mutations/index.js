@@ -1,4 +1,4 @@
-import { gql } from 'apollo-boost';
+ import { gql } from 'apollo-boost';
 
 export const SIGNUP_USER = gql`
   mutation signupUser($username: String!, $email: String!, $password: String!) {
@@ -15,3 +15,11 @@ export const SIGNIN_USER = gql`
     }
   }
 `;
+
+export const ADD_RECIPE = gql`
+mutation addRecipe($name: String!, $description: String!, $category: String!, $instruction: String!, $username: String){
+  addRecipe(name: $name, description: $description, category: $category, instructions: $instruction, username: $username){
+    name
+  }
+}
+`

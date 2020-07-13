@@ -10,7 +10,7 @@ exports.resolvers = {
   Query: {
     getAllRecipes: async (root, args, { Recipe }) => {
       const allRecipes = await Recipe.find();
-      return allRecipes;
+      return allRecipes.reverse();
     },
     getCurrentUser: async (root, args, { currentUser, User }) => {
       if (!currentUser) {
@@ -22,6 +22,11 @@ exports.resolvers = {
       }).populate({ path: 'favorites', model: 'Recipe' });
 
       return user;
+    },
+    getRecipe: async (root, { _id }, { Recipe }) => {
+      const recipe = await Recipe.findOne({ _id });
+
+      return recipe;
     },
   },
   Mutation: {

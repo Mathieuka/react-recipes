@@ -15,6 +15,7 @@ import Signin from './components/Auth/Signin';
 import Signup from './components/Auth/Signup';
 import Search from './components/Recipe/Search';
 import withSession from './components/withSession';
+import RecipePage from './components/Recipe/RecipePage';
 
 import './index.css';
 
@@ -45,8 +46,9 @@ const Root = ({ refetch, session }) => (
       <Navbar session={session} />
       <Switch>
         <Route path="/" exact component={App} />
-        <Route path="/search"  component={Search} />
+        <Route path="/search" component={Search} />
         <Route path="/recipe/add" component={AddRecipe} />
+        <Route path="/recipes/:_id" component={RecipePage} />
         <Route path="/signin" render={() => <Signin refetch={refetch} />} />
         <Route path="/signup" render={() => <Signup refetch={refetch} />} />
         <Route path="/profile" component={Profile} />
