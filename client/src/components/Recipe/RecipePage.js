@@ -1,14 +1,30 @@
 import React from 'react';
-import { useQuery } from 'react-apollo';
+import { useQuery, useMutation } from 'react-apollo';
 import { withRouter } from 'react-router-dom';
 import { GET_RECIPE } from '../../queries/index';
+import { ADD_LIKE } from '../../mutations/index';
 import './RecipePage.css';
 
 const RecipePage = ({ match }) => {
   const { _id } = match.params;
+  const [addLikeMutation] = useMutation(ADD_LIKE);
+  
   const { data, loading, error } = useQuery(GET_RECIPE, {
     variables: { _id },
   });
+
+  const handleLike = () => {
+    try {
+      addLikeMutation({
+        variables: {
+          _id: _id,
+        },
+      });
+      document.location.reload();
+    } catch (error) {
+      console.error('ERROR:: ', error);
+    }
+  };
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error</div>;
@@ -26,7 +42,7 @@ const RecipePage = ({ match }) => {
     <div>
       <div className="recipe__title">
         <h3>
-          <bold>{name}</bold>
+          <b>{name}</b>
           <p>Category: {category}</p>
         </h3>
       </div>
@@ -38,7 +54,7 @@ const RecipePage = ({ match }) => {
         <p>Created by: {username}</p>
       </div>
       <div className="like">
-        <button>Like</button>
+        <button onClick={(e) => handleLike(e)}>Like</button>
       </div>
     </div>
   );

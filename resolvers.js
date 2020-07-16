@@ -71,5 +71,15 @@ exports.resolvers = {
 
       return { token: createToken(user, process.env.SECRET, '1hr') };
     },
+    addLike: async (root, { _id }, { Recipe }) => {
+      const recipe = await Recipe.findOne({ _id });
+      await Recipe.update(
+        { _id: _id, likes: recipe.likes },
+        { $set: { _id: _id, likes: recipe.likes + 1 } }
+      );
+
+      const recipeUpdate = await Recipe.findOne({ _id });
+      return recipeUpdate;
+    },
   },
 };

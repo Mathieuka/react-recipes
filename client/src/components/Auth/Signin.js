@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useMutation } from 'react-apollo';
 import { SIGNIN_USER } from '../../mutations/index';
 import { withRouter } from 'react-router-dom';
 import Error from '../Error/Error';
+
 
 const Signin = ({ history, refetch }) => {
   const [username, setUsername] = useState('');

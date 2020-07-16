@@ -14,7 +14,7 @@ const AddRecipe = ({ history }) => {
   const [error, setError] = useState('');
 
   const [addRecipeMutation, { data }] = useMutation(ADD_RECIPE);
-  console.log('category => ', category);
+  
   function clearState() {
     setName(() => '');
     setDescription(() => '');
@@ -27,7 +27,6 @@ const AddRecipe = ({ history }) => {
   const handleAddRecipe = async (e) => {
     e.preventDefault();
     if (name && description && category && instructions) {
-      console.log('yo');
       try {
         const { data } = await addRecipeMutation({
           variables: {
@@ -36,6 +35,7 @@ const AddRecipe = ({ history }) => {
             category: category,
             instruction: instructions,
             username: username,
+            likes: 0
           },
         });
         console.log('data => ', data);

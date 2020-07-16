@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import RecipeItem from './Recipe/RecipeItem';
 import './App.css';
 import { useQuery } from 'react-apollo';
