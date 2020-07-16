@@ -32,6 +32,10 @@ export const ADD_RECIPE = gql`
       username: $username
     ) {
       name
+      description
+      category
+      instructions
+      username
     }
   }
 `;

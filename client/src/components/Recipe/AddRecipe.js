@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useMutation } from 'react-apollo';
 import { withRouter } from 'react-router-dom';
 import { ADD_RECIPE } from '../../mutations/index';
+import { GET_ALL_RECIPES } from '../../queries/index';
 import Error from '../Error/Error';
 import './AddRecipe.css';
 
@@ -13,8 +14,23 @@ const AddRecipe = ({ history }) => {
   const [username, setUsername] = useState('');
   const [error, setError] = useState('');
 
-  const [addRecipeMutation, { data }] = useMutation(ADD_RECIPE);
-  
+  const updateCache = (cache, { data: { addRecipe } }) => {
+    const { getAllRecipes } = cache.readQuery({ query: GET_ALL_RECIPES });
+    console.log('[AddRecipe] allRecipesCache => ', getAllRecipes);
+    console.log('[AddRecipe] addRecipe => ', addRecipe);
+
+    cache.writeQuery({
+      query: GET_ALL_RECIPES,
+      data: {
+        getAllRecipes: [addRecipe, ...getAllRecipes],
+      },
+    });
+  };
+
+  const [addRecipeMutation, { data }] = useMutation(ADD_RECIPE, {
+    update: updateCache,
+  });
+
   function clearState() {
     setName(() => '');
     setDescription(() => '');
@@ -35,7 +51,7 @@ const AddRecipe = ({ history }) => {
             category: category,
             instruction: instructions,
             username: username,
-            likes: 0
+            likes: 0,
           },
         });
         console.log('data => ', data);
