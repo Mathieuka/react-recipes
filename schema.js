@@ -42,5 +42,7 @@ exports.typeDefs = `
         signupUser(username: String!, email: String!, password: String!): Token
         
         signinUser(username: String!, password: String!): Token
+
+        addLike(_id: String!): Recipe
     }
     `;
