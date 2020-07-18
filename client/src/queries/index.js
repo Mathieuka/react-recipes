@@ -33,3 +33,18 @@ export const GET_RECIPE = gql`
     }
   }
 `;
+
+export const SEARCH_RECIPE = gql`
+  query searchRecipes($searchTerm: String, $category: String) {
+    searchRecipes(searchTerm: $searchTerm, category: $category) {
+      _id
+      name
+      category
+      description
+      instructions
+      createdDate
+      likes
+      username
+    }
+  }
+`;

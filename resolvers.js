@@ -28,6 +28,14 @@ exports.resolvers = {
 
       return recipe;
     },
+    searchRecipes: async (root, { searchTerm, category }, { Recipe }) => {
+      const recipesFind = await Recipe.find({
+        name: { $regex: searchTerm },
+        category: { $regex: category },
+      });
+
+      return recipesFind;
+    },
   },
   Mutation: {
     addRecipe: async (

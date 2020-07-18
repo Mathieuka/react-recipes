@@ -16,8 +16,6 @@ const AddRecipe = ({ history }) => {
 
   const updateCache = (cache, { data: { addRecipe } }) => {
     const { getAllRecipes } = cache.readQuery({ query: GET_ALL_RECIPES });
-    console.log('[AddRecipe] allRecipesCache => ', getAllRecipes);
-    console.log('[AddRecipe] addRecipe => ', addRecipe);
 
     cache.writeQuery({
       query: GET_ALL_RECIPES,
